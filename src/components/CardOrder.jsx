@@ -2,7 +2,6 @@ import React from 'react';
 import {
    Button,
    Col,
-   Input,
    Row,
    Space,
    Statistic,
@@ -13,36 +12,42 @@ import {
    PlusOutlined
 } from '@ant-design/icons';
 
-export default function CardOrder() {
+export default function CardOrder({ orderItem, cart, setCart }) {
    return (
       <div>
-         <Row gutter={[10, 10]}>
-            <Col>
+         <Row gutter={[10, 10]} >
+            <Col xs={4}>
                <img
-                  src='https://www.mk1642.com/getmetafile/5b1e38b2-c15a-4677-80e1-a753e4e6c637/K0170.aspx?maxsidesize=1900'
-                  alt='image'
+                  src={orderItem.img}
+                  alt={orderItem.name}
                   width='100%'
+                  style={{ borderRadius: '8px' }}
                />
             </Col>
 
-            <Col>
-               <Typography.Text>Corn</Typography.Text>
+            <Col xs={8}>
+               <Typography.Text>{orderItem.name}</Typography.Text>
             </Col>
 
-            <Col>
-               <Space>
+            <Col flex={1}>
+               <Space >
                   <Button
                      icon={<MinusOutlined />}
+                     size='large'
                   />
-                  <Typography.Text>2</Typography.Text>
+
+                  <Typography.Text style={{ padding: '0px 5px' }}>2</Typography.Text>
+
                   <Button
-                     icon={<PlusOutlined />} />
+                     icon={<PlusOutlined />}
+                     size='large'
+                  />
                </Space>
             </Col>
 
             <Col>
                <Statistic
-                  value={200}
+                  value={orderItem.price}
                />
             </Col>
          </Row>

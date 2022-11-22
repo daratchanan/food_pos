@@ -8,7 +8,9 @@ import {
 import { SettingOutlined } from '@ant-design/icons';
 import CardOrder from './CardOrder';
 
-export default function CurrentOrder() {
+export default function CurrentOrder({ products, cart, setCart }) {
+   // console.log('cart=>', cart);
+
    return (
       <div style={{ margin: '30px' }} >
          <Row>
@@ -28,9 +30,15 @@ export default function CurrentOrder() {
                </Row>
             </Col>
 
-            <Col>
-               <CardOrder />
-            </Col>
+            {cart.map(item =>
+               <Col key={item.id}>
+                  <CardOrder
+                     orderItem={item}
+                     cart={cart}
+                     setCart={setCart}
+                  />
+               </Col>
+            )}
          </Row>
       </div>
    )

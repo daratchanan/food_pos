@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
    Button,
    Col,
@@ -17,6 +17,7 @@ const { Header, Sider, Content } = Layout;
 
 export default function Home() {
    const { token } = theme.useToken();
+   const [cart, setCart] = useState([]);
 
    return (
       <Layout>
@@ -41,7 +42,11 @@ export default function Home() {
                   )}
 
                   <Col xs={24}>
-                     <Products products={products} />
+                     <Products
+                        products={products}
+                        cart={cart}
+                        setCart={setCart}
+                     />
                   </Col>
                </Row>
             </Content>
@@ -51,7 +56,11 @@ export default function Home() {
             width={500}
             style={{ background: token.siderColor }}
          >
-            <CurrentOrder />
+            <CurrentOrder
+               products={products}
+               cart={cart}
+               setCart={setCart}
+            />
          </Sider>
       </Layout>
    )
