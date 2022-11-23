@@ -7,9 +7,15 @@ import {
 } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import CardOrder from './CardOrder';
+import TotalOrder from './TotalOrder';
 
 export default function CurrentOrder({ products, cart, setCart }) {
    // console.log('cart=>', cart);
+   const onClear = () => {
+      const temCart = [...cart];
+      const newCarts = temCart.filter(f => f.id === products.id)
+      setCart(newCarts)
+   };
 
    return (
       <div style={{ margin: '30px' }} >
@@ -20,7 +26,10 @@ export default function CurrentOrder({ products, cart, setCart }) {
                      <Typography.Title level={3}>Current Order</Typography.Title>
                   </Col>
                   <Col>
-                     <Button type='primary'>
+                     <Button
+                        type='primary'
+                        onClick={onClear}
+                     >
                         Clear All
                      </Button>
                   </Col>
@@ -39,6 +48,13 @@ export default function CurrentOrder({ products, cart, setCart }) {
                   />
                </Col>
             )}
+
+            <Col xs={24} style={{ marginTop: '10px' }}>
+               <TotalOrder
+                  cart={cart}
+                  setCart={setCart}
+               />
+            </Col>
          </Row>
       </div>
    )

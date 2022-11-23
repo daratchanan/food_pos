@@ -9,13 +9,35 @@ import {
 } from 'antd';
 import {
    MinusOutlined,
-   PlusOutlined
+   PlusOutlined,
+   DeleteOutlined
 } from '@ant-design/icons';
 
 export default function CardOrder({ orderItem, cart, setCart }) {
+   const onMinus = () => {
+      const newCarts = [...cart];
+      const index = newCarts.indexOf(orderItem);
+      newCarts[index].qty -= 1;
+      setCart(newCarts);
+   };
+
+   const onPlus = () => {
+      const newCarts = [...cart];
+      const index = newCarts.indexOf(orderItem);
+      newCarts[index].qty += 1;
+      setCart(newCarts);
+   };
+
+   const onDelete = () => {
+      const tempCart = [...cart];
+      const newCarts = tempCart.filter(f => f.id !== orderItem.id);
+      setCart(newCarts);
+   };
+
+
    return (
-      <div>
-         <Row gutter={[10, 10]} >
+      <div style={{ padding: '10px 0px' }}>
+         <Row gutter={[10, 0]}>
             <Col xs={4}>
                <img
                   src={orderItem.img}
@@ -25,31 +47,64 @@ export default function CardOrder({ orderItem, cart, setCart }) {
                />
             </Col>
 
-            <Col xs={8}>
+            <Col xs={8}
+               style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center'
+               }}
+            >
                <Typography.Text>{orderItem.name}</Typography.Text>
             </Col>
 
             <Col flex={1}>
                <Space >
-                  <Button
-                     icon={<MinusOutlined />}
-                     size='large'
-                  />
+                  {orderItem.qty <= 1 ?
+                     <Button
+                        icon={<DeleteOutlined />}
+                        size='large'
+                        type='primary'
+                        onClick={onDelete}
+                     />
+                     :
+                     <Button
+                        icon={<MinusOutlined />}
+                        size='large'
+                        onClick={onMinus}
+                     />
+                  }
 
-                  <Typography.Text style={{ padding: '0px 5px' }}>2</Typography.Text>
+                  <Typography.Text
+                     style={{
+                        padding: '0px 5px',
+                        fontWeight: 'bold'
+                     }}
+                  >
+                     {orderItem.qty}
+                  </Typography.Text>
 
                   <Button
                      icon={<PlusOutlined />}
                      size='large'
+                     onClick={onPlus}
                   />
                </Space>
             </Col>
 
             <Col>
-               <Statistic
-                  value={orderItem.price}
-               />
+               <Space
+                  style={{ height: '100%' }}
+                  align='center'
+               >
+                  <Statistic
+                     prefix='฿'
+                     precision={2}
+                     value={orderItem.price * orderItem.qty}
+                     valueStyle={{ fontSize: '14px', fontWeight: 'bold' }}
+                  />
+               </Space>
             </Col>
+
          </Row>
       </div>
    )

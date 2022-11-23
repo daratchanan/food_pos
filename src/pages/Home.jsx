@@ -18,6 +18,12 @@ const { Header, Sider, Content } = Layout;
 export default function Home() {
    const { token } = theme.useToken();
    const [cart, setCart] = useState([]);
+   const [data, setData] = useState(products);
+
+   const onFilterCategory = (cat) => {
+      const targetCategory = products.filter(f => f.category === cat.value);
+      setData(targetCategory);
+   };
 
    return (
       <Layout>
@@ -35,6 +41,7 @@ export default function Home() {
                         <Button
                            type='primary'
                            style={{ margin: '20px 0px' }}
+                           onClick={() => onFilterCategory(cat)}
                         >
                            {cat.label}
                         </Button>
@@ -43,7 +50,7 @@ export default function Home() {
 
                   <Col xs={24}>
                      <Products
-                        products={products}
+                        products={data}
                         cart={cart}
                         setCart={setCart}
                      />

@@ -45,8 +45,8 @@ export default function ProductCard({ product, cart, setCart }) {
                <Row justify='space-between' >
                   <Col >
                      <Space
-                        align='end'
                         style={{ height: '100%' }}
+                        align='end'
                      >
                         <Typography.Title level={3} style={{ color: '#F38100', margin: '0px' }}>
                            ฿ {product.price}
